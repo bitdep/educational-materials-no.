@@ -1,274 +1,219 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitelity Bonus Promo</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>Bitelity Academy</title>
     <style>
         :root {
-            --dark-blue: #000c18;
-            --electric-blue: #00d2ff;
-            --royal-blue: #3a7bd5;
-            --gold: #ffcc00;
+            --accent: #0052FF;
+            --basic-color: #10B981;
+            --pro-color: #F59E0B;
+            --text-dark: #0F172A;
+            --text-gray: #475569;
+            --border: #E2E8F0;
+            --bg-sidebar: #F8FAFC;
         }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(rgba(0, 10, 20, 0.85), rgba(0, 10, 20, 0.85)), 
-                        url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            font-family: 'Arial Black', sans-serif;
-            overflow: hidden;
-        }
+        body { font-family: 'Inter', sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; }
 
-        .logo-container {
-            margin-bottom: 15px;
-            z-index: 10;
-        }
+        /* Sidebar */
+        nav { width: 300px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 30px 20px; flex-shrink: 0; }
+        .logo-container { text-align: left; margin-bottom: 30px; }
+        .sidebar-logo { width: 110px; display: block; }
+        .academy-text { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .nav-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-gray); margin: 15px 0 8px 10px; }
+        .nav-item { padding: 12px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; color: var(--text-dark); border: none; background: none; text-align: left; width: 100%; font-size: 14px; margin-bottom: 4px; }
+        .nav-item:hover { background: #F1F5F9; }
+        .nav-item.active { background: var(--accent); color: white; }
 
-        .logo-img {
-            height: 90px;
-            width: auto;
-            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
-        }
+        .upgrade-card { padding: 15px; border-radius: 12px; margin-bottom: 10px; text-align: center; }
+        .btn-upgrade { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: 800; cursor: pointer; font-size: 12px; text-transform: uppercase; color: white; }
+        .basic-zone { background: #ECFDF5; border: 1px solid #A7F3D0; }
+        .pro-zone { background: #FFFBEB; border: 1px solid #FDE68A; }
 
-        .promo-header h1 {
-            font-size: 3.5rem;
-            margin: 0 0 25px 0;
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #ffffff 0%, var(--electric-blue) 50%, var(--royal-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 5px 15px rgba(0, 210, 255, 0.6));
-            text-align: center;
-            letter-spacing: 1px;
-        }
+        /* Main Content Area */
+        main { flex-grow: 1; padding: 40px 6%; overflow-y: auto; }
+        .section { display: none; max-width: 900px; }
+        .section.active { display: block; }
 
-        .wheel-outer-frame {
-            position: relative;
-            padding: 22px;
-            background: conic-gradient(from 45deg, #d4af37, #f7ef8a, #d4af37, #f7ef8a, #d4af37);
-            border-radius: 50%;
-            box-shadow: 0 0 60px rgba(0, 210, 255, 0.4);
-        }
+        .lesson-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
+        .lesson-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 
-        .wheel-container {
-            position: relative;
-            width: 480px;
-            height: 480px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 10px solid var(--dark-blue);
-            background: var(--dark-blue);
-        }
-
-        #wheel {
-            width: 100%;
-            height: 100%;
-            transition: transform 8s cubic-bezier(0.1, 0, 0, 1);
-        }
-
-        .pointer {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 60px;
-            background: linear-gradient(to bottom, #ff4136, #800000);
-            clip-path: polygon(50% 100%, 0 0, 100% 0);
-            z-index: 40;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
-        }
-
-        .center-cap {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px; height: 80px;
-            background: radial-gradient(circle, #444, #111);
-            border: 4px solid var(--gold);
-            border-radius: 50%;
-            z-index: 30;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold);
-            font-size: 2.2rem;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
-
-        #spin-btn {
-            margin-top: 40px;
-            padding: 20px 80px;
-            font-size: 1.8rem;
-            color: white;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, var(--royal-blue) 0%, var(--dark-blue) 100%);
-            border: 2px solid var(--electric-blue);
-            border-radius: 100px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.4);
-            transition: all 0.2s;
-            z-index: 10;
-        }
-
-        #spin-btn:hover { transform: scale(1.05); }
-        #spin-btn:active { transform: scale(0.95); }
-        #spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .win-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 4, 8, 0.95);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            opacity: 0;
-            transition: opacity 0.8s;
-        }
-
-        .win-content {
-            background: white;
-            padding: 70px;
-            border-radius: 50px;
-            text-align: center;
-            border: 12px solid var(--royal-blue);
-            transform: scale(0.4);
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 80px rgba(0, 210, 255, 0.5);
-        }
-
-        .show-modal { display: flex; opacity: 1; }
-        .show-modal .win-content { transform: scale(1); }
+        /* Modal System */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; width: 90%; max-width: 850px; max-height: 85vh; border-radius: 24px; padding: 45px; overflow-y: auto; position: relative; }
+        .close-btn { position: sticky; top: 0; float: right; cursor: pointer; font-size: 28px; line-height: 1; }
+        
+        .highlight { background: #F0F7FF; padding: 20px; border-radius: 12px; margin: 15px 0; border-left: 4px solid var(--accent); line-height: 1.7; }
+        .hash-box { font-family: monospace; background: #0F172A; color: #10B981; padding: 12px; border-radius: 8px; font-size: 13px; word-break: break-all; margin: 10px 0; display: block; }
+        .step-item { background: #F8FAFC; padding: 18px; border-radius: 10px; margin-bottom: 12px; border-left: 4px solid var(--accent); }
+        
+        .modal-logo { width: 110px; margin: 0 auto; display: block; }
+        .btn-invest { background: var(--accent); color: white; padding: 18px; border-radius: 12px; font-weight: 800; font-size: 16px; border: none; cursor: pointer; width: 100%; margin-top: 20px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
+<div id="mainModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content" id="modalContainer" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<nav>
     <div class="logo-container">
-        <img src="https://i.ibb.co/7dSVZ1K5/logo.png" alt="Bitelity Logo" class="logo-img">
+        <img src="https://bitelity.net/Media/Image/logo.svg" alt="Bitelity Logo" class="sidebar-logo">
+        <div class="academy-text">Academy</div>
     </div>
+    
+    <div class="nav-label">Gratis Training</div>
+    <button class="nav-item active" onclick="showTab('free_edu')">Inleiding tot Assets</button>
+    
+    <div class="nav-label">BASIC Programma</div>
+    <button class="nav-item" onclick="openInvest('BASIC')">Technische Analyse 🔒</button>
+    <button class="nav-item" onclick="openInvest('BASIC')">Indicatoren Mastery 🔒</button>
+    
+    <div class="nav-label">PRO Programma</div>
+    <button class="nav-item" onclick="openInvest('PRO')">Handelsstrategieën 🔒</button>
 
-    <div class="promo-header">
-        <h1>Bitelity Bonus Promo</h1>
-    </div>
-
-    <div class="wheel-outer-frame">
-        <div class="pointer"></div>
-        <div class="center-cap">B</div>
-        <div class="wheel-container">
-            <canvas id="wheel" width="480" height="480"></canvas>
+    <div style="margin-top: auto;">
+        <div class="upgrade-card basic-zone">
+            <button class="btn-upgrade" style="background:var(--basic-color)" onclick="openInvest('BASIC')">Upgrade naar BASIC</button>
+        </div>
+        <div class="upgrade-card pro-zone">
+            <button class="btn-upgrade" style="background:var(--pro-color)" onclick="openInvest('PRO')">Upgrade naar PRO</button>
         </div>
     </div>
+</nav>
 
-    <button id="spin-btn">Spin to Win</button>
-
-    <div id="win-modal" class="win-modal">
-        <div class="win-content">
-            <h2 style="color: var(--royal-blue); margin: 0; letter-spacing: 2px;">BIG WINNER!</h2>
-            <h1 id="win-amount" style="font-size: 7rem; margin: 20px 0; color: #111;">�0</h1>
-            <p style="font-size: 1.8rem; color: #444;">Bonus credited to Bitelity Account</p>
-            <button onclick="closeModal()" style="padding: 10px 30px; cursor: pointer; border-radius: 10px; border: none; background: var(--royal-blue); color: white;">Continue</button>
+<main>
+    <section id="free_edu" class="section active">
+        <h1>Basis van Digitale Assets</h1>
+        <div class="lesson-card" onclick="openEdu('btc')">
+            <h3>Wat is Bitcoin?</h3>
+            <p>De eerste digitale valuta ter wereld, digitaal goud en de kracht van decentralisatie.</p>
         </div>
-    </div>
+        <div class="lesson-card" onclick="openEdu('blockchain')">
+            <h3>Hoe werkt blockchain?</h3>
+            <p>Een stapsgewijze analyse van de technologie: van transactie tot hashing.</p>
+        </div>
+        <div class="lesson-card" onclick="openEdu('smart')">
+            <h3>Smart Contract</h3>
+            <p>Digitale overeenkomsten die werken zonder tussenpersonen, banken of advocaten.</p>
+        </div>
+    </section>
+</main>
 
-    <script>
-        const canvas = document.getElementById('wheel');
-        const ctx = canvas.getContext('2d');
-        const btn = document.getElementById('spin-btn');
-        const modal = document.getElementById('win-modal');
-        const winAmountText = document.getElementById('win-amount');
+<script>
+    const contentData = {
+        btc: `
+            <h2>Bitcoin (Bitcoin, BTC)</h2>
+            <p>Bitcoin is 's werelds eerste gedecentraliseerde digitale valuta, in 2009 gecreëerd door een persoon of groep onder het pseudoniem Satoshi Nakamoto.</p>
+            <p>In tegenstelling tot regulier geld wordt bitcoin niet uitgegeven door banken of overheden. Het werkt op blockchain-technologie — een gedistribueerde database waarin alle transacties worden vastgelegd.</p>
+            <h3>Hoe werkt bitcoin?</h3>
+            <div class="highlight">
+                Stel je een enorm elektronisch grootboek voor dat tegelijkertijd op miljoenen computers over de hele wereld is opgeslagen. Elke keer dat iemand bitcoins verzendt of ontvangt, wordt de informatie in dit boek genoteerd. Het is vrijwel onmogelijk om gegevens te wijzigen of te verwijderen.
+            </div>
+            <h3>Belangrijkste kenmerken van Bitcoin:</h3>
+            <ul>
+                <li><strong>Decentralisatie</strong> — er is geen centrale bank of bedrijf dat het netwerk controleert.</li>
+                <li><strong>Beperkte uitgifte</strong> — er zullen in totaal 21 miljoen BTC worden uitgegeven, wat bitcoin een schaars bezit maakt.</li>
+                <li><strong>Transparantie</strong> — alle transacties kunnen in de blockchain worden gecontroleerd.</li>
+                <li><strong>Beveiliging</strong> — het netwerk wordt beschermd door duizenden computers (nodes) over de hele wereld.</li>
+                <li><strong>Globaliteit</strong> — u kunt binnen enkele minuten bitcoins naar elk land verzenden.</li>
+            </ul>
+            <h3>Waar wordt bitcoin voor gebruikt?</h3>
+            <ul>
+                <li>💰 <strong>Investeringen</strong> — velen zien BTC als een langetermijnactiva, vergelijkbaar met digitaal goud.</li>
+                <li>🌍 <strong>Internationale overschrijvingen</strong> — geld verzenden zonder tussenpersonen.</li>
+                <li>🛍️ <strong>Betaling voor goederen</strong> — steeds meer bedrijven accepteren Bitcoin.</li>
+            </ul>
+            <h3>Waarom wordt bitcoin "digitaal goud" genoemd?</h3>
+            <p>Bitcoin wordt vaak vergeleken met goud omdat de hoeveelheid beperkt is; het hangt niet af van besluiten van centrale banken; het kan niet onbeperkt worden "bijgedrukt".</p>
+            <div class="highlight" style="background: #FFFBEB; border-color: #F59E0B;">
+                <strong>Interessant feit:</strong> De eerste echte aankoop met bitcoins was de bestelling van twee pizza's op 22 mei 2010. Er werd 10.000 BTC voor betaald. Vandaag de dag staat deze datum bekend als Bitcoin Pizza Day.
+            </div>
+        `,
+        blockchain: `
+            <h2>Hoe werkt blockchain?</h2>
+            <p>Blockchain is een digitale database waarin informatie wordt opgeslagen in de vorm van een reeks aan elkaar gekoppelde blokken. Elk nieuw blok bevat informatie over het vorige blok.</p>
+            <h3>Stel je een grootboek voor</h3>
+            <div class="highlight">
+                Stel je een groot kasboek voor waarin alle overschrijvingen worden genoteerd. In plaats van bij één bank, staat een kopie van dit boek op duizenden computers tegelijk. Wanneer er een nieuwe transactie plaatsvindt, controleren alle computers deze en voegen deze tegelijkertijd aan het boek toe.
+            </div>
+            <h3>Stap 1. De gebruiker verzendt crypto</h3>
+            <p>Anna stuurt 0,5 BTC naar Ivan. Er wordt een overschrijvingsverzoek aangemaakt.</p>
+            <h3>Stap 2. De transactie wordt verzonden naar het netwerk</h3>
+            <p>Informatie over de overdracht wordt verzonden naar duizenden computers (nodes) in het netwerk.</p>
+            <h3>Stap 3. Transactieverificatie</h3>
+            <p>Computers controleren: of de afzender voldoende saldo heeft en of de digitale handtekening correct is.</p>
+            <h3>Stap 4. Een nieuw blok maken</h3>
+            <p>Bevestigde transacties worden gecombineerd in één blok. Het blok bevat: een lijst met transacties, een tijdstempel en een unieke code (hash) van het vorige blok.</p>
+            <h3>Stap 5. Blok toevoegen aan de keten</h3>
+            <p>Na verificatie wordt het nieuwe blok toegevoegd aan het einde van de blockchain. Alle deelnemers ontvangen een bijgewerkte kopie.</p>
+            <h3>Wat is een hash?</h3>
+            <p>Voorbeeld:<br>Tekst: <strong>Bitcoin</strong> -> Hash: <span class="hash-box">6b86b273ff34fce19d6b804eff5a3f57...</span></p>
+            <div class="highlight">
+                <strong>Simpele analogie:</strong> Stel je een ketting van transparante dozen voor 📦. Elke nieuwe doos zit met een sterk slot aan de vorige vast. Als iemand een doos in het midden probeert te openen, passen alle volgende sloten niet meer.
+            </div>
+        `,
+        smart: `
+            <h2>Smart Contract</h2>
+            <p>Een smart contract is een programma dat automatisch de voorwaarden uitvoert van een overeenkomst die in de blockchain is vastgelegd.</p>
+            <div class="highlight">
+                Een smart contract is een digitaal contract dat zichzelf uitvoert wanneer aan de voorwaarden is voldaan.
+            </div>
+            <h3>Simpel voorbeeld (Verkoopautomaat)</h3>
+            <p>Stel je een frisdrankautomaat voor. Je werpt geld in → selecteert een drankje → de machine geeft het direct af. Niemand neemt handmatig een beslissing — alles gebeurt automatisch volgens vooraf ingestelde regels.</p>
+            <h3>Waar worden ze gebruikt?</h3>
+            <ul>
+                <li>💰 <strong>DeFi</strong> — leningen verstrekken, valuta wisselen.</li>
+                <li>🎨 <strong>NFT</strong> — automatische overdracht van digitale kunst.</li>
+            </ul>
+        `
+    };
 
-        const bonuses = ["�200", "�400", "�500", "�800", "�1000", "�1500", "�1800", "�2000"];
-        const colors = ["#001529", "#0074d9"];
-        const totalSectors = bonuses.length;
-        const arc = (2 * Math.PI) / totalSectors;
+    function openEdu(key) { 
+        document.getElementById('modalContainer').style.maxWidth = "850px"; 
+        document.getElementById('modalBody').innerHTML = contentData[key]; 
+        document.getElementById('mainModal').style.display = 'flex'; 
+    }
 
-        // Sequence logic
-        const sequence = ["�1800", "�2000", "�1500", "�200", "�500", "�2000"];
-        let currentSequenceIndex = 0;
-        let currentTotalRotation = 0;
+    function openInvest(level) {
+        document.getElementById('modalContainer').style.maxWidth = "600px";
+        const price = level === 'BASIC' ? '4950 EUR' : '9950 EUR';
+        const url = level === 'BASIC' ? 'https://formspree.io/f/mbdvqdzo' : 'https://formspree.io/f/xnjkljgv';
+        document.getElementById('modalBody').innerHTML = `
+            <div style="text-align:center">
+                <img src="https://bitelity.net/Media/Image/logo.svg" alt="Bitelity" class="modal-logo">
+                <div class="academy-text" style="margin-bottom:20px;">Academy</div>
+                <p style="font-size:18px; margin:20px 0; font-weight: 500;">Om meer toegang en mogelijkheden te krijgen, is uw investering vereist.</p>
+                <button class="btn-invest" onclick="submitInvest('${url}')">UPGRADE MET ${price}</button>
+            </div>`;
+        document.getElementById('mainModal').style.display = 'flex';
+    }
 
-        function draw() {
-            for (let i = 0; i < totalSectors; i++) {
-                const angle = i * arc;
-                ctx.fillStyle = colors[i % 2];
-                ctx.beginPath();
-                ctx.moveTo(240, 240);
-                ctx.arc(240, 240, 240, angle, angle + arc);
-                ctx.fill();
-
-                ctx.save();
-                ctx.translate(240, 240);
-                ctx.rotate(angle + arc / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 28px sans-serif";
-                ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-                ctx.shadowBlur = 5;
-                ctx.fillText(bonuses[i], 220, 10);
-                ctx.restore();
-            }
-        }
-
-        draw();
-
-        function closeModal() {
-            modal.classList.remove('show-modal');
-            btn.disabled = false;
-        }
-
-        btn.addEventListener('click', () => {
-            btn.disabled = true;
-            
-            // Get current target from sequence
-            const targetValue = sequence[currentSequenceIndex];
-            const targetIndex = bonuses.indexOf(targetValue);
-            
-            const degreesPerSlice = 360 / totalSectors;
-            const fullSpins = 360 * 10; // Extra spins for effect
-            
-            // Calculate the specific rotation to land on the target index
-            // Formula: Full rotations + (offset to align index with top pointer)
-            // We subtract the currentTotalRotation to ensure it always spins forward
-            const targetRotation = (targetIndex * degreesPerSlice);
-            const landingPoint = 360 - targetRotation - (degreesPerSlice / 2) - 90;
-            
-            currentTotalRotation += fullSpins + (landingPoint - (currentTotalRotation % 360) + 360) % 360;
-
-            canvas.style.transform = `rotate(${currentTotalRotation}deg)`;
-
-            setTimeout(() => {
-                winAmountText.innerText = targetValue;
-                modal.classList.add('show-modal');
-                
-                // Confetti Burst
-                const duration = 5 * 1000;
-                const animationEnd = Date.now() + duration;
-                (function frame() {
-                    const timeLeft = animationEnd - Date.now();
-                    if (timeLeft <= 0) return;
-                    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#00d2ff', '#ffffff'] });
-                    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#3a7bd5', '#ffffff'] });
-                    requestAnimationFrame(frame);
-                }());
-
-                // Increment sequence index or reset
-                currentSequenceIndex++;
-                if (currentSequenceIndex >= sequence.length) {
-                    currentSequenceIndex = 0;
-                }
-            }, 8200);
+    function submitInvest(url) {
+        fetch(url, { method: 'POST', body: JSON.stringify({ request: "Upgrade Verzoek" }), headers: { 'Accept': 'application/json' } })
+        .then(() => { 
+            document.getElementById('modalBody').innerHTML = `
+                <div style="text-align:center">
+                    <img src="https://bitelity.net/Media/Image/logo.svg" alt="Bitelity" class="modal-logo">
+                    <div class="academy-text" style="margin-bottom:20px;">Academy</div>
+                    <h2 style="color:var(--basic-color)">Verzoek Ontvangen</h2>
+                    <p style="font-size:18px;">Uw financieel adviseur neemt spoedig contact met u op.</p>
+                </div>`; 
         });
-    </script>
+    }
+
+    function closeModal() { document.getElementById('mainModal').style.display = 'none'; }
+    function showTab(id) { 
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
+        document.getElementById(id).classList.add('active'); 
+    }
+</script>
 </body>
 </html>
