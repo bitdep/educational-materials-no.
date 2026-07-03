@@ -41,6 +41,20 @@
         .lesson-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
         .lesson-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 
+        .locked-card { position: relative; overflow: hidden; }
+        .locked-card::after {
+            content: "🔒";
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 24px;
+            opacity: 0.5;
+        }
+        .locked-card:hover::after { opacity: 1; }
+
+        .basic-badge { display: inline-block; background: var(--basic-color); color: white; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; }
+        .pro-badge { display: inline-block; background: var(--pro-color); color: white; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; }
+
         /* Modal System */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: white; width: 90%; max-width: 850px; max-height: 85vh; border-radius: 24px; padding: 45px; overflow-y: auto; position: relative; }
@@ -73,10 +87,12 @@
     <button class="nav-item active" onclick="showTab('free_edu')">Inleiding tot Assets</button>
     
     <div class="nav-label">BASIC Programma</div>
+    <button class="nav-item" onclick="showTab('basic_edu')">Crypto Fundamenten 🔒</button>
     <button class="nav-item" onclick="openInvest('BASIC')">Technische Analyse 🔒</button>
     <button class="nav-item" onclick="openInvest('BASIC')">Indicatoren Mastery 🔒</button>
     
     <div class="nav-label">PRO Programma</div>
+    <button class="nav-item" onclick="showTab('pro_edu')">Handelspraktijk 🔒</button>
     <button class="nav-item" onclick="openInvest('PRO')">Handelsstrategieën 🔒</button>
 
     <div style="margin-top: auto;">
@@ -90,6 +106,7 @@
 </nav>
 
 <main>
+    <!-- FREE SECTION -->
     <section id="free_edu" class="section active">
         <h1>Basis van Digitale Assets</h1>
         <div class="lesson-card" onclick="openEdu('btc')">
@@ -103,6 +120,40 @@
         <div class="lesson-card" onclick="openEdu('smart')">
             <h3>Smart Contract</h3>
             <p>Digitale overeenkomsten die werken zonder tussenpersonen, banken of advocaten.</p>
+        </div>
+    </section>
+
+    <!-- BASIC SECTION - LOCKED -->
+    <section id="basic_edu" class="section">
+        <h1>Crypto Fundamenten <span style="color:var(--basic-color); font-size:18px;">[BASIC]</span></h1>
+        <p style="color:var(--text-gray); margin-bottom:25px;">Upgrade naar BASIC om deze lessen te ontgrendelen.</p>
+        
+        <div class="lesson-card locked-card" onclick="openInvest('BASIC')">
+            <span class="basic-badge">BASIC</span>
+            <h3>Cryptocurrency Wallets</h3>
+            <p>Hot wallets vs cold wallets, hoe beveilig je private keys, en de beste praktijken voor opslag.</p>
+        </div>
+        <div class="lesson-card locked-card" onclick="openInvest('BASIC')">
+            <span class="basic-badge">BASIC</span>
+            <h3>Altcoins Overview</h3>
+            <p>Ethereum, stablecoins, en andere belangrijke cryptocurrencies — wat maakt ze uniek?</p>
+        </div>
+    </section>
+
+    <!-- PRO SECTION - LOCKED -->
+    <section id="pro_edu" class="section">
+        <h1>Handelspraktijk <span style="color:var(--pro-color); font-size:18px;">[PRO]</span></h1>
+        <p style="color:var(--text-gray); margin-bottom:25px;">Upgrade naar PRO om deze lessen te ontgrendelen.</p>
+        
+        <div class="lesson-card locked-card" onclick="openInvest('PRO')">
+            <span class="pro-badge">PRO</span>
+            <h3>Buying & Selling Crypto</h3>
+            <p>Exchanges, KYC-procedures, order types, en hoe je veilig koopt en verkoopt.</p>
+        </div>
+        <div class="lesson-card locked-card" onclick="openInvest('PRO')">
+            <span class="pro-badge">PRO</span>
+            <h3>Crypto Security</h3>
+            <p>Veelvoorkomende scams, phishing, 2FA, seed phrase bescherming, en hoe je jezelf beschermt.</p>
         </div>
     </section>
 </main>
@@ -212,7 +263,9 @@
     function closeModal() { document.getElementById('mainModal').style.display = 'none'; }
     function showTab(id) { 
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.getElementById(id).classList.add('active'); 
+        event.target.classList.add('active');
     }
 </script>
 </body>
