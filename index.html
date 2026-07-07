@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,16 +22,11 @@
         .logo-container { text-align: center; margin-bottom: 30px; }
         .sidebar-logo { width: 80px; display: block; margin: 0 auto; }
         .academy-text { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
-        
+
         .nav-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-gray); margin: 15px 0 8px 10px; }
         .nav-item { padding: 12px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; color: var(--text-dark); border: none; background: none; text-align: left; width: 100%; font-size: 14px; margin-bottom: 4px; }
         .nav-item:hover { background: #F1F5F9; }
         .nav-item.active { background: var(--accent); color: white; }
-
-        .upgrade-card { padding: 15px; border-radius: 12px; margin-bottom: 10px; text-align: center; }
-        .btn-upgrade { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: 800; cursor: pointer; font-size: 12px; text-transform: uppercase; color: white; }
-        .basic-zone { background: #ECFDF5; border: 1px solid #A7F3D0; }
-        .pro-zone { background: #FFFBEB; border: 1px solid #FDE68A; }
 
         /* Main Content Area */
         main { flex-grow: 1; padding: 40px 6%; overflow-y: auto; }
@@ -41,38 +36,449 @@
         .lesson-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
         .lesson-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 
-        .locked-card { position: relative; overflow: hidden; }
-        .locked-card::after {
-            content: "🔒";
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 24px;
-            opacity: 0.5;
-        }
-        .locked-card:hover::after { opacity: 1; }
-
-        .basic-badge { display: inline-block; background: var(--basic-color); color: white; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; }
-        .pro-badge { display: inline-block; background: var(--pro-color); color: white; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; }
-
         /* Modal System */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: white; width: 90%; max-width: 850px; max-height: 85vh; border-radius: 24px; padding: 45px; overflow-y: auto; position: relative; }
         .close-btn { position: sticky; top: 0; float: right; cursor: pointer; font-size: 28px; line-height: 1; }
-        
+
         .highlight { background: #F0F7FF; padding: 20px; border-radius: 12px; margin: 15px 0; border-left: 4px solid var(--accent); line-height: 1.7; }
-        .hash-box { font-family: monospace; background: #0F172A; color: #10B981; padding: 12px; border-radius: 8px; font-size: 13px; word-break: break-all; margin: 10px 0; display: block; }
-        .step-item { background: #F8FAFC; padding: 18px; border-radius: 10px; margin-bottom: 12px; border-left: 4px solid var(--accent); }
-        
+
         .modal-logo { width: 110px; margin: 0 auto; display: block; }
         .btn-invest { background: var(--accent); color: white; padding: 18px; border-radius: 12px; font-weight: 800; font-size: 16px; border: none; cursor: pointer; width: 100%; margin-top: 20px; text-transform: uppercase; }
+
+        /* PRICING CARDS */
+        .pricing-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .pricing-card.silver { border-color: var(--basic-color); }
+        .pricing-card.pro { border-color: var(--pro-color); }
+
+        .pricing-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .pricing-badge.silver { background: var(--basic-color); }
+        .pricing-badge.pro { background: var(--pro-color); }
+
+        .pricing-amount {
+            font-size: 52px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 10px 0;
+        }
+        .pricing-amount span {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin: 30px 0;
+            padding: 0;
+            list-style: none;
+        }
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 15px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pricing-features li:last-child { border-bottom: none; }
+        .pricing-features .check { color: var(--basic-color); font-weight: 700; font-size: 18px; flex-shrink: 0; }
+        .pricing-card.pro .pricing-features .check { color: var(--pro-color); }
+
+        .pricing-input-group {
+            margin-top: 25px;
+        }
+        .pricing-input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .pricing-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-dark);
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .pricing-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-pricing {
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 800;
+            font-size: 16px;
+            text-transform: uppercase;
+            color: white;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        .btn-pricing:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .btn-pricing.silver { background: var(--basic-color); }
+        .btn-pricing.pro { background: var(--pro-color); }
+        .btn-pricing:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .pricing-note {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
+        /* LOCKED SECTION */
+        .locked-message {
+            text-align: center;
+            padding: 60px 40px;
+            background: white;
+            border: 2px dashed var(--border);
+            border-radius: 24px;
+        }
+        .locked-message .lock-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        .locked-message h2 {
+            font-size: 28px;
+            color: var(--text-dark);
+            margin: 0 0 15px 0;
+        }
+        .locked-message p {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin: 0 0 30px 0;
+            line-height: 1.6;
+        }
+
+        /* Section headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section-header h1 {
+            font-size: 32px;
+            color: var(--text-dark);
+            margin: 0 0 10px 0;
+        }
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        /* FREE SECTION STYLES (preserved) */
+        .free-welcome {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .free-welcome h1 { margin: 0 0 15px 0; font-size: 32px; }
+        .free-welcome p { margin: 0; font-size: 18px; opacity: 0.9; }
+
+        .progress-tracker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: #F8FAFC;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+        .progress-step.completed { background: var(--basic-color); color: white; }
+        .progress-step.active { background: var(--accent); color: white; }
+        .progress-line {
+            flex-grow: 1;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+        }
+        .progress-line.completed { background: var(--basic-color); }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent), var(--basic-color));
+            border-radius: 3px;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .timeline-dot.milestone { border-color: var(--basic-color); background: var(--basic-color); }
+        .timeline-year {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .timeline-content {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .timeline-content h4 { margin: 0 0 8px 0; }
+        .timeline-content p { margin: 0; color: var(--text-gray); font-size: 14px; }
+
+        /* Comparison Slider */
+        .comparison-slider {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin: 20px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+        }
+        .comparison-side {
+            padding: 30px;
+            text-align: center;
+        }
+        .comparison-side.traditional { background: #F1F5F9; }
+        .comparison-side.defi { background: linear-gradient(135deg, #ECFDF5, #D1FAE5); }
+        .comparison-side h3 { margin: 0 0 15px 0; }
+        .comparison-side ul { text-align: left; padding-left: 20px; margin: 0; }
+        .comparison-side li { margin-bottom: 8px; font-size: 14px; }
+        .vs-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--text-dark);
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* Glossary Styles */
+        .glossary-search {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .glossary-search:focus { border-color: var(--accent); }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .glossary-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .glossary-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .glossary-term {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .glossary-def {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+        .glossary-letter {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        /* Myth Buster */
+        .myth-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .myth-card:hover { border-color: #EF4444; }
+        .myth-card.flipped { border-color: #10B981; }
+        .myth-question {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .myth-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #FEF2F2;
+            color: #EF4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .myth-card.flipped .myth-icon {
+            background: #ECFDF5;
+            color: #10B981;
+        }
+        .myth-answer {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        .myth-card.flipped .myth-answer { display: block; }
+        .myth-card.flipped .myth-question { display: none; }
+
+        /* Quick Start Steps */
+        .quick-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .quick-step {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .quick-step:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .quick-step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            margin: 0 auto 15px;
+        }
+        .quick-step h4 { margin: 0 0 8px 0; font-size: 14px; }
+        .quick-step p { margin: 0; font-size: 12px; color: var(--text-gray); }
+
+        .warning-box {
+            background: #FFFBEB;
+            border: 2px solid #FDE68A;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .warning-box h4 { color: #D97706; margin: 0 0 10px 0; }
+
+        @media (max-width: 768px) {
+            .quick-steps { grid-template-columns: repeat(2, 1fr); }
+            .comparison-slider { grid-template-columns: 1fr; }
+            .pricing-wrapper { max-width: 100%; }
+            nav { width: 260px; }
+        }
     </style>
+<base target="_blank">
 </head>
 <body>
 
 <div id="mainModal" class="modal-overlay" onclick="closeModal(event)">
     <div class="modal-content" id="modalContainer" onclick="event.stopPropagation()">
-        <span class="close-btn" onclick="closeModal()">×</span>
+        <span class="close-btn" onclick="closeModal()">&times;</span>
         <div id="modalBody"></div>
     </div>
 </div>
@@ -82,150 +488,765 @@
         <img src="https://bitelity.net/Media/Image/logo.svg" alt="Bitelity Logo" class="sidebar-logo">
         <div class="academy-text">Academy</div>
     </div>
-    
-    <div class="nav-label">Gratis Training</div>
-    <button class="nav-item active" onclick="showTab('free_edu')">Inleiding tot Assets</button>
-    
-    <div class="nav-label">BASIC Programma</div>
-    <button class="nav-item" onclick="showTab('basic_edu')">Crypto Fundamenten 🔒</button>
-    <button class="nav-item" onclick="openInvest('BASIC')">Technische Analyse 🔒</button>
-    <button class="nav-item" onclick="openInvest('BASIC')">Indicatoren Mastery 🔒</button>
-    
-    <div class="nav-label">PRO Programma</div>
-    <button class="nav-item" onclick="showTab('pro_edu')">Handelspraktijk 🔒</button>
-    <button class="nav-item" onclick="openInvest('PRO')">Handelsstrategieën 🔒</button>
 
-    <div style="margin-top: auto;">
-        <div class="upgrade-card basic-zone">
-            <button class="btn-upgrade" style="background:var(--basic-color)" onclick="openInvest('BASIC')">Upgrade naar BASIC</button>
-        </div>
-        <div class="upgrade-card pro-zone">
-            <button class="btn-upgrade" style="background:var(--pro-color)" onclick="openInvest('PRO')">Upgrade naar PRO</button>
-        </div>
-    </div>
+    <div class="nav-label">Gratis Opplæring</div>
+    <button class="nav-item active" onclick="showTab('free_edu', this)">Introduksjon til Assets</button>
+
+    <div class="nav-label">BASIC Program</div>
+    <button class="nav-item" onclick="showTab('basic_edu', this)">Crypto Fundamenter</button>
+    <button class="nav-item" onclick="showTab('ta_edu', this)">Teknisk Analyse</button>
+    <button class="nav-item" onclick="showTab('im_edu', this)">Indikator Mastery</button>
+
+    <div class="nav-label">PRO Program</div>
+    <button class="nav-item" onclick="showTab('pro_edu', this)">Handelspraksis</button>
+    <button class="nav-item" onclick="showTab('pro_edu', this)">Handelsstrategier</button>
 </nav>
 
 <main>
-    <!-- FREE SECTION -->
+    <!-- FREE SECTION - FULLY OPEN (unchanged) -->
     <section id="free_edu" class="section active">
-        <h1>Basis van Digitale Assets</h1>
+        <div class="free-welcome">
+            <h1>Velkommen til Bitelity Academy</h1>
+            <p>Ditt gratis utgangspunkt i verden av digitale assets. Ingen erfaring nødvendig - vi forklarer alt fra bunnen av.</p>
+        </div>
+
+        <div class="progress-tracker">
+            <div class="progress-step completed">1</div>
+            <div class="progress-line completed"></div>
+            <div class="progress-step completed">2</div>
+            <div class="progress-line completed"></div>
+            <div class="progress-step completed">3</div>
+            <div class="progress-line"></div>
+            <div class="progress-step active">4</div>
+            <div class="progress-line"></div>
+            <div class="progress-step">5</div>
+            <span style="margin-left: 10px; color: var(--text-gray); font-size: 14px;">Du er her: Steg 4 of 5</span>
+        </div>
+
+        <h2 style="margin-bottom: 20px;">Gratiskurs: Introduksjon til Digitale Assets</h2>
+
+        <div class="lesson-card" onclick="openEdu('why_crypto')">
+            <h3>Hvorfor Crypto?</h3>
+            <p>Problemene digitale assets løser: inflasjon, banktilgang, hastighet og åpenhet.</p>
+        </div>
+
         <div class="lesson-card" onclick="openEdu('btc')">
-            <h3>Wat is Bitcoin?</h3>
-            <p>De eerste digitale valuta ter wereld, digitaal goud en de kracht van decentralisatie.</p>
+            <h3>Hva er Bitcoin?</h3>
+            <p>Verdens første digitale valuta, digitalt gull, og kraften i desentralisering.</p>
         </div>
+
         <div class="lesson-card" onclick="openEdu('blockchain')">
-            <h3>Hoe werkt blockchain?</h3>
-            <p>Een stapsgewijze analyse van de technologie: van transactie tot hashing.</p>
+            <h3>Hvordan fungerer blockchain?</h3>
+            <p>En trinnvis analyse av teknologien: fra transaksjon til hashing.</p>
         </div>
+
         <div class="lesson-card" onclick="openEdu('smart')">
             <h3>Smart Contract</h3>
-            <p>Digitale overeenkomsten die werken zonder tussenpersonen, banken of advocaten.</p>
+            <p>Digitale avtaler som fungerer uten mellomledd, banker eller advokater.</p>
+        </div>
+
+        <div class="lesson-card" onclick="openEdu('trad_vs_defi')">
+            <h3>Tradisjonell Banking vs DeFi</h3>
+            <p>En interaktiv sammenligning av det gamle systemet mot desentralisert finans.</p>
+        </div>
+
+        <div class="lesson-card" onclick="openEdu('timeline')">
+            <h3>Historien om Crypto</h3>
+            <p>Fra Bitcoin-whitepaperen i 2008 til dagens DeFi-revolusjon - en visuell tidslinje.</p>
+        </div>
+
+        <div class="lesson-card" onclick="openEdu('quickstart')">
+            <h3>Hvordan Kommer Du I Gang? - 4 Trinn</h3>
+            <p>Velg Lommebok &rarr; Finn Exchange &rarr; Første Kjøp &rarr; Sikker Oppbevaring.</p>
+        </div>
+
+        <div class="lesson-card" onclick="openEdu('myths')">
+            <h3>Myter og Misforståelser</h3>
+            <p>"Crypto er bare for kriminelle", "Det er for sent å komme inn", og andre avkreftede myter.</p>
+        </div>
+
+        <div class="lesson-card" onclick="openEdu('security_basics')">
+            <h3>Sikkerhet Grunnleggende</h3>
+            <p>De første reglene for crypto-sikkerhet: private nøkler, gjenkjenning av svindel, og hvorfor 2FA er essensielt.</p>
+        </div>
+
+        <div class="lesson-card" onclick="openEdu('glossary')">
+            <h3>Crypto Ordliste</h3>
+            <p>Alle viktige begreper på ett sted - fra Airdrop til Whale. Søkbar og enkel.</p>
         </div>
     </section>
 
-    <!-- BASIC SECTION - LOCKED -->
+    <!-- BASIC SECTION - SILVER ACCOUNT PRICING -->
     <section id="basic_edu" class="section">
-        <h1>Crypto Fundamenten <span style="color:var(--basic-color); font-size:18px;">[BASIC]</span></h1>
-        <p style="color:var(--text-gray); margin-bottom:25px;">Upgrade naar BASIC om deze lessen te ontgrendelen.</p>
-        
-        <div class="lesson-card locked-card" onclick="openInvest('BASIC')">
-            <span class="basic-badge">BASIC</span>
-            <h3>Cryptocurrency Wallets</h3>
-            <p>Hot wallets vs cold wallets, hoe beveilig je private keys, en de beste praktijken voor opslag.</p>
+        <div class="section-header">
+            <h1>BASIC Program</h1>
+            <p>Oppgrader til SILVER ACCOUNT og få full tilgang til BASIC-handelsprogrammet.</p>
         </div>
-        <div class="lesson-card locked-card" onclick="openInvest('BASIC')">
-            <span class="basic-badge">BASIC</span>
-            <h3>Altcoins Overview</h3>
-            <p>Ethereum, stablecoins, en andere belangrijke cryptocurrencies — wat maakt ze uniek?</p>
+
+        <div class="pricing-wrapper">
+            <div class="pricing-card silver">
+                <div class="pricing-badge silver">SILVER ACCOUNT</div>
+                <div class="pricing-amount">&euro;4,950</div>
+                <p style="color: var(--text-gray); margin: 0;">Engangs investering</p>
+
+                <ul class="pricing-features">
+                    <li><span class="check">&#10003;</span> Forex + Aksjehandel</li>
+                    <li><span class="check">&#10003;</span> Giring 1:2</li>
+                    <li><span class="check">&#10003;</span> Finansiell Rådgiver: 1 t/uke</li>
+                    <li><span class="check">&#10003;</span> Minimum Fortjeneste 20%</li>
+                    <li><span class="check">&#10003;</span> Support på e-post / Whatsapp</li>
+                    <li><span class="check">&#10003;</span> Trading Academy: Basic Program</li>
+                    <li><span class="check">&#10003;</span> Crypto Fundamenter Kurs</li>
+                    <li><span class="check">&#10003;</span> Teknisk Analyse Kurs</li>
+                    <li><span class="check">&#10003;</span> Indikator Mastery Kurs</li>
+                </ul>
+
+                <div class="pricing-input-group">
+                    <label>Skriv inn beløp for å fortsette</label>
+                    <input type="text" class="pricing-input" id="basicAmount" value="4950" oninput="validateAmount('basic', 4950)">
+                </div>
+
+                <button class="btn-pricing silver" id="basicBtn" onclick="openInvest('BASIC', 4950)">MELD DEG PÅ - &euro;4.950</button>
+                <p class="pricing-note">Etter betaling får du umiddelbar tilgang til alle BASIC-leksjoner og din personlige finansielle rådgiver vil kontakte deg.</p>
+            </div>
         </div>
     </section>
 
-    <!-- PRO SECTION - LOCKED -->
-    <section id="pro_edu" class="section">
-        <h1>Handelspraktijk <span style="color:var(--pro-color); font-size:18px;">[PRO]</span></h1>
-        <p style="color:var(--text-gray); margin-bottom:25px;">Upgrade naar PRO om deze lessen te ontgrendelen.</p>
-        
-        <div class="lesson-card locked-card" onclick="openInvest('PRO')">
-            <span class="pro-badge">PRO</span>
-            <h3>Buying & Selling Crypto</h3>
-            <p>Exchanges, KYC-procedures, order types, en hoe je veilig koopt en verkoopt.</p>
+    <!-- TECHNICAL ANALYSIS - LOCKED (redirects to BASIC) -->
+    <section id="ta_edu" class="section">
+        <div class="section-header">
+            <h1>Teknisk Analyse</h1>
+            <p>Leer prijsgrafieken lezen, trends identificeren en trading beslissingen nemen.</p>
         </div>
-        <div class="lesson-card locked-card" onclick="openInvest('PRO')">
-            <span class="pro-badge">PRO</span>
-            <h3>Crypto Security</h3>
-            <p>Veelvoorkomende scams, phishing, 2FA, seed phrase bescherming, en hoe je jezelf beschermt.</p>
+
+        <div class="locked-message">
+            <div class="lock-icon">&#128274;</div>
+            <h2>BASIC Oppgradering Påkrevd</h2>
+            <p>Teknisk Analyse-kurset er en del av BASIC Programmet.<br>Oppgrader til SILVER ACCOUNT for å få tilgang til alle 13 leksjoner.</p>
+            <button class="btn-pricing silver" onclick="showTab('basic_edu', document.querySelectorAll('.nav-item')[1])" style="max-width: 400px; margin: 0 auto;">SE SILVER ACCOUNT &euro;4.950</button>
+        </div>
+    </section>
+
+    <!-- INDICATOR MASTERY - LOCKED (redirects to BASIC) -->
+    <section id="im_edu" class="section">
+        <div class="section-header">
+            <h1>Indikator Mastery</h1>
+            <p>En komplett guide til tekniske indikatorer i cryptocurrency.</p>
+        </div>
+
+        <div class="locked-message">
+            <div class="lock-icon">&#128274;</div>
+            <h2>BASIC Oppgradering Påkrevd</h2>
+            <p>Indikator Mastery-kurset er en del av BASIC Programmet.<br>Oppgrader til SILVER ACCOUNT for å få tilgang til alle 16 leksjoner.</p>
+            <button class="btn-pricing silver" onclick="showTab('basic_edu', document.querySelectorAll('.nav-item')[1])" style="max-width: 400px; margin: 0 auto;">SE SILVER ACCOUNT &euro;4.950</button>
+        </div>
+    </section>
+
+    <!-- PRO SECTION - PRO ACCOUNT PRICING -->
+    <section id="pro_edu" class="section">
+        <div class="section-header">
+            <h1>PRO Program</h1>
+            <p>Oppgrader til PRO ACCOUNT for den komplette handelspakken med alle funksjoner.</p>
+        </div>
+
+        <div class="pricing-wrapper">
+            <div class="pricing-card pro">
+                <div class="pricing-badge pro">PRO ACCOUNT</div>
+                <div class="pricing-amount">&euro;9,950</div>
+                <p style="color: var(--text-gray); margin: 0;">Engangs investering</p>
+
+                <ul class="pricing-features">
+                    <li><span class="check">&#10003;</span> Forex + Crypto + Aksjehandel</li>
+                    <li><span class="check">&#10003;</span> AI Pro 2.0 bot <sterk style="color: var(--pro-color);">[NEW]</sterk></li>
+                    <li><span class="check">&#10003;</span> Giring 1:10</li>
+                    <li><span class="check">&#10003;</span> Finansiell Rådgiver: 2 t/uke</li>
+                    <li><span class="check">&#10003;</span> Minimum Fortjeneste 25%</li>
+                    <li><span class="check">&#10003;</span> Support på e-post / Whatsapp</li>
+                    <li><span class="check">&#10003;</span> Trading Academy: <sterk>Full Tilgang</sterk></li>
+                    <li><span class="check">&#10003;</span> Ukentlige Markedsanmeldelser</li>
+                    <li><span class="check">&#10003;</span> Tilgang til 4x OTC-handler</li>
+                    <li><span class="check">&#10003;</span> Basic Program (inkludert)</li>
+                    <li><span class="check">&#10003;</span> Handelspraksis Kurs</li>
+                    <li><span class="check">&#10003;</span> Handelsstrategier Kurs</li>
+                </ul>
+
+                <div class="pricing-input-group">
+                    <label>Skriv inn beløp for å fortsette</label>
+                    <input type="text" class="pricing-input" id="proAmount" value="9950" oninput="validateAmount('pro', 9950)">
+                </div>
+
+                <button class="btn-pricing pro" id="proBtn" onclick="openInvest('PRO', 9950)">MELD DEG PÅ - &euro;9.950</button>
+                <p class="pricing-note">Etter betaling får du umiddelbar full tilgang til ALLE academy-leksjoner, AI Pro 2.0 bot-en, og din personlige finansielle rådgiver vil kontakte deg.</p>
+            </div>
         </div>
     </section>
 </main>
 
 <script>
+    // VALIDATE AMOUNT INPUT
+    function validateAmount(type, required) {
+        const input = document.getElementById(type + 'Amount');
+        const btn = document.getElementById(type + 'Btn');
+        const val = parseFloat(input.value.replace(/[^0-9]/g, ''));
+
+        if (val === required) {
+            btn.disabled = false;
+            btn.textContent = type === 'basic' ? 'MELD DEG PÅ - &euro;4.950' : 'MELD DEG PÅ - &euro;9.950';
+            input.style.borderColor = type === 'basic' ? 'var(--basic-color)' : 'var(--pro-color)';
+        } else {
+            btn.disabled = true;
+            btn.textContent = 'SKRIV INN RIKTIG BELØP';
+            input.style.borderColor = '#EF4444';
+        }
+    }
+
+    // TAB SWITCHING
+    function showTab(id, el) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(id).classList.add('active'); 
+        if (el) el.classList.add('active');
+    }
+
+    // MODAL - FREE CONTENT
     const contentData = {
-        btc: `
-            <h2>Bitcoin (Bitcoin, BTC)</h2>
-            <p>Bitcoin is 's werelds eerste gedecentraliseerde digitale valuta, in 2009 gecreëerd door een persoon of groep onder het pseudoniem Satoshi Nakamoto.</p>
-            <p>In tegenstelling tot regulier geld wordt bitcoin niet uitgegeven door banken of overheden. Het werkt op blockchain-technologie — een gedistribueerde database waarin alle transacties worden vastgelegd.</p>
-            <h3>Hoe werkt bitcoin?</h3>
+        why_crypto: `
+            <h2>Hvorfor Crypto?</h2>
+            <p>Digitale assets løser grunnleggende problemer i vårt nåværende finansielle system. Her er de viktigste grunnene til hvorfor millioner av mennesker verden over bytter:</p>
+
             <div class="highlight">
-                Stel je een enorm elektronisch grootboek voor dat tegelijkertijd op miljoenen computers over de hele wereld is opgeslagen. Elke keer dat iemand bitcoins verzendt of ontvangt, wordt de informatie in dit boek genoteerd. Het is vrijwel onmogelijk om gegevens te wijzigen of te verwijderen.
+                <h3>1. Beskyttelse Mot Inflasjon</h3>
+                <p>Tradisjonelle valutaer mister verdi årlig på grunn av pengeprinting. Bitcoin har et fast antall på 21 millioner - ingen sentralbank kan printe mer.</p>
             </div>
-            <h3>Belangrijkste kenmerken van Bitcoin:</h3>
+
+            <div class="highlight">
+                <h3>2. Finansiell Tilgjengelighet</h3>
+                <p>1,7 milliarder mennesker verden over har ingen bankkonto. Med crypto trenger du bare en smarttelefon og internett.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>3. Hastighet og Kostnader</h3>
+                <p>Internasjonale overføringer via banker: 3-5 dager, høye gebyrer. Crypto: minutter, en brøkdel av kostnaden.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>4. Åpenhet</h3>
+                <p>Alle transaksjoner er offentlig synlige på blockchain. Ingen skjulte gebyrer eller manipulering.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>5. Eierskap</h3>
+                <p>Med crypto er du den eneste eieren av pengene dine. Ingen bank kan fryse kontoen din eller pålegge begrensninger.</p>
+            </div>
+        `,
+        btc: `
+            <h2>Bitcoin (BTC)</h2>
+            <p>Bitcoin er verdens første desentraliserte digitale valuta, skapt i 2009 av en person eller gruppe under pseudonymet Satoshi Nakamoto.</p>
+            <p>I motsetning til vanlig penger, utstedes ikke bitcoin av banker eller myndigheter. Den kjører på blockchain-teknologi - en distribuert database hvor alle transaksjoner registreres.</p>
+            <h3>Hvordan fungerer bitcoin?</h3>
+            <div class="highlight">
+                Tenk deg en enorm elektronisk hovedbok lagret samtidig på millioner av datamaskiner verden over. Hver gang noen sender eller mottar bitcoin, registreres informasjonen i denne boken. Det er praktisk talt umulig å endre eller slette data.
+            </div>
+            <h3>Viktige Trekk ved Bitcoin:</h3>
             <ul>
-                <li><strong>Decentralisatie</strong> — er is geen centrale bank of bedrijf dat het netwerk controleert.</li>
-                <li><strong>Beperkte uitgifte</strong> — er zullen in totaal 21 miljoen BTC worden uitgegeven, wat bitcoin een schaars bezit maakt.</li>
-                <li><strong>Transparantie</strong> — alle transacties kunnen in de blockchain worden gecontroleerd.</li>
-                <li><strong>Beveiliging</strong> — het netwerk wordt beschermd door duizenden computers (nodes) over de hele wereld.</li>
-                <li><strong>Globaliteit</strong> — u kunt binnen enkele minuten bitcoins naar elk land verzenden.</li>
+                <li><sterk>Desentralisering</sterk> - det finnes ingen sentralbank eller selskap som kontrollerer nettverket.</li>
+                <li><sterk>Begrenset Tilbud</sterk> - totalt vil 21 millioner BTC bli utstedt, noe som gjør bitcoin til en knapp ressurs.</li>
+                <li><sterk>Åpenhet</sterk> - alle transaksjoner kan verifiseres på blockchain.</li>
+                <li><sterk>Sikkerhet</sterk> - nettverket er beskyttet av tusenvis av datamaskiner (noder) verden over.</li>
+                <li><sterk>Globalitet</sterk> - du kan sende bitcoin til ethvert land i løpet av minutter.</li>
             </ul>
-            <h3>Waar wordt bitcoin voor gebruikt?</h3>
+            <h3>Hva brukes bitcoin til?</h3>
             <ul>
-                <li>💰 <strong>Investeringen</strong> — velen zien BTC als een langetermijnactiva, vergelijkbaar met digitaal goud.</li>
-                <li>🌍 <strong>Internationale overschrijvingen</strong> — geld verzenden zonder tussenpersonen.</li>
-                <li>🛍️ <strong>Betaling voor goederen</strong> — steeds meer bedrijven accepteren Bitcoin.</li>
+                <li>Investeringer - mange ser på BTC som en langsiktig ressurs, sammenlignbart med digitalt gull.</li>
+                <li>Internasjonale overføringer - sende penger uten mellomledd.</li>
+                <li>Betaling for varer - stadig flere selskaper godtar Bitcoin.</li>
             </ul>
-            <h3>Waarom wordt bitcoin "digitaal goud" genoemd?</h3>
-            <p>Bitcoin wordt vaak vergeleken met goud omdat de hoeveelheid beperkt is; het hangt niet af van besluiten van centrale banken; het kan niet onbeperkt worden "bijgedrukt".</p>
+            <h3>Hvorfor kalles bitcoin for "digitalt gull"?</h3>
+            <p>Bitcoin sammenlignes ofte med gull fordi mengden er begrenset; den avhenger ikke av beslutninger fra sentralbanker; den kan ikke utstedes i det uendelige.</p>
             <div class="highlight" style="background: #FFFBEB; border-color: #F59E0B;">
-                <strong>Interessant feit:</strong> De eerste echte aankoop met bitcoins was de bestelling van twee pizza's op 22 mei 2010. Er werd 10.000 BTC voor betaald. Vandaag de dag staat deze datum bekend als Bitcoin Pizza Day.
+                <sterk>Interessant faktum:</sterk> Det første virkelige kjøpet med bitcoin var bestillingen av to pizzaer 22. mai 2010. Det ble betalt 10 000 BTC for det. I dag er denne datoen kjent som Bitcoin Pizza Day.
             </div>
         `,
         blockchain: `
-            <h2>Hoe werkt blockchain?</h2>
-            <p>Blockchain is een digitale database waarin informatie wordt opgeslagen in de vorm van een reeks aan elkaar gekoppelde blokken. Elk nieuw blok bevat informatie over het vorige blok.</p>
-            <h3>Stel je een grootboek voor</h3>
+            <h2>Hvordan fungerer blockchain?</h2>
+            <p>Blockchain er en digital database der informasjon lagres som en serie sammenkoblede blokker. Hver ny blokk inneholder informasjon om den forrige blokken.</p>
+            <h3>Tenk deg en hovedbok</h3>
             <div class="highlight">
-                Stel je een groot kasboek voor waarin alle overschrijvingen worden genoteerd. In plaats van bij één bank, staat een kopie van dit boek op duizenden computers tegelijk. Wanneer er een nieuwe transactie plaatsvindt, controleren alle computers deze en voegen deze tegelijkertijd aan het boek toe.
+                Tenk deg en stor kontantbok der alle overføringer registreres. I stedet for i en bank, ligger en kopi av denne boken på tusenvis av datamaskiner samtidig. Når en ny transaksjon finner sted, verifiserer alle datamaskiner den og legger den til i boken samtidig.
             </div>
-            <h3>Stap 1. De gebruiker verzendt crypto</h3>
-            <p>Anna stuurt 0,5 BTC naar Ivan. Er wordt een overschrijvingsverzoek aangemaakt.</p>
-            <h3>Stap 2. De transactie wordt verzonden naar het netwerk</h3>
-            <p>Informatie over de overdracht wordt verzonden naar duizenden computers (nodes) in het netwerk.</p>
-            <h3>Stap 3. Transactieverificatie</h3>
-            <p>Computers controleren: of de afzender voldoende saldo heeft en of de digitale handtekening correct is.</p>
-            <h3>Stap 4. Een nieuw blok maken</h3>
-            <p>Bevestigde transacties worden gecombineerd in één blok. Het blok bevat: een lijst met transacties, een tijdstempel en een unieke code (hash) van het vorige blok.</p>
-            <h3>Stap 5. Blok toevoegen aan de keten</h3>
-            <p>Na verificatie wordt het nieuwe blok toegevoegd aan het einde van de blockchain. Alle deelnemers ontvangen een bijgewerkte kopie.</p>
-            <h3>Wat is een hash?</h3>
-            <p>Voorbeeld:<br>Tekst: <strong>Bitcoin</strong> -> Hash: <span class="hash-box">6b86b273ff34fce19d6b804eff5a3f57...</span></p>
+            <h3>Trinn 1. Brukeren sender crypto</h3>
+            <p>Anna sends 0.5 BTC to Iof. A transfer request is created.</p>
+            <h3>Trinn 2. Transaksjonen sendes til nettverket</h3>
+            <p>Informasjon om overføringen sendes til tusenvis av datamaskiner (noder) i nettverket.</p>
+            <h3>Trinn 3. Transaksjonsverifisering</h3>
+            <p>Datamaskiner sjekker: om avsender har tilstrekkelig saldo og om den digitale signaturen er korrekt.</p>
+            <h3>Trinn 4. Opprette en ny blokk</h3>
+            <p>Bekreftede transaksjoner kombineres til en blokk. Blokken inneholder: en liste over transaksjoner, et tidsstempel, og en unik kode (hash) fra den forrige blokken.</p>
+            <h3>Trinn 5. Legge blokken til kjeden</h3>
+            <p>Etter verifisering legges den nye blokken til i enden av blockchain. Alle deltakere mottar en oppdatert kopi.</p>
+            <h3>Hva er en hash?</h3>
+            <p>Eksempel:<br>Tekst: <sterk>Bitcoin</sterk> -> Hash: <span style="font-family: monospace; background: #0F172A; color: #10B981; padding: 12px; border-radius: 8px; font-size: 13px; word-break: break-all; margin: 10px 0; display: block;">6b86b273ff34fce19d6b804eff5a3f57...</span></p>
             <div class="highlight">
-                <strong>Simpele analogie:</strong> Stel je een ketting van transparante dozen voor 📦. Elke nieuwe doos zit met een sterk slot aan de vorige vast. Als iemand een doos in het midden probeert te openen, passen alle volgende sloten niet meer.
+                <sterk>Enkel analogi:</sterk> Tenk deg en kjede av gjennomsiktige bokser. Hver nye boks er låst med en sterk lås til den forrige. Hvis noen prøver å åpne en boks i midten, passer ikke alle påfølgende låser lenger.
             </div>
         `,
         smart: `
             <h2>Smart Contract</h2>
-            <p>Een smart contract is een programma dat automatisch de voorwaarden uitvoert van een overeenkomst die in de blockchain is vastgelegd.</p>
+            <p>En smart kontrakt er et program som automatisk utfører vilkårene i en avtale registrert på blockchain.</p>
             <div class="highlight">
-                Een smart contract is een digitaal contract dat zichzelf uitvoert wanneer aan de voorwaarden is voldaan.
+                En smart kontrakt er en digital kontrakt som utfører seg selv når betingelser er oppfylt.
             </div>
-            <h3>Simpel voorbeeld (Verkoopautomaat)</h3>
-            <p>Stel je een frisdrankautomaat voor. Je werpt geld in → selecteert een drankje → de machine geeft het direct af. Niemand neemt handmatig een beslissing — alles gebeurt automatisch volgens vooraf ingestelde regels.</p>
-            <h3>Waar worden ze gebruikt?</h3>
+            <h3>Enkelt eksempel (Brusautomat)</h3>
+            <p>Tenk deg en brusautomat. Du setter inn penger -> velger en drikk -> maskinen gir den ut umiddelbart. Ingen tar en manuell beslutning - alt skjer automatisk i henhold til forhåndsinnstilte regler.</p>
+            <h3>Hvor brukes de?</h3>
             <ul>
-                <li>💰 <strong>DeFi</strong> — leningen verstrekken, valuta wisselen.</li>
-                <li>🎨 <strong>NFT</strong> — automatische overdracht van digitale kunst.</li>
+                <li>DeFi - tilby lån, veksle valutaer.</li>
+                <li>NFT - automatisk overføring av digital kunst.</li>
             </ul>
+        `,
+        trad_vs_defi: `
+            <h2>Tradisjonell Banking vs DeFi</h2>
+            <p>En direkte sammenligning mellom det gamle finansielle systemet og desentralisert finans:</p>
+
+            <div class="comparison-slider">
+                <div class="comparison-side traditional">
+                    <h3>Tradisjonell</h3>
+                    <ul>
+                        <li>Banker som mellomledd</li>
+                        <li>Begrensede åpningstider</li>
+                        <li>Høye transaksjonskostnader</li>
+                        <li>Dager med venting på overføringer</li>
+                        <li>Minimumssaldo påkrevd</li>
+                        <li>Banken bestemmer over pengene dine</li>
+                        <li>Papirarbeid og KYC</li>
+                        <li>Ingen åpenhet</li>
+                    </ul>
+                </div>
+                <div class="vs-divider">VS</div>
+                <div class="comparison-side defi">
+                    <h3>DeFi</h3>
+                    <ul>
+                        <li>Ingen mellomledd</li>
+                        <li>24/7 tilgjengelig</li>
+                        <li>Lave til ingen kostnader</li>
+                        <li>Minutter for overføringer</li>
+                        <li>Intet minimum</li>
+                        <li>Du er eieren</li>
+                        <li>Bare lommebok nødvendig</li>
+                        <li>Fullstendig åpen</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>Fremtiden for Finans</h3>
+                <p>DeFi gjør finansielle tjenester tilgjengelige for alle med internett - uavhengig av sted, inntekt eller bakgrunn. Ingen banktillatelse nødvendig.</p>
+            </div>
+        `,
+        timeline: `
+            <h2>Historien om Crypto</h2>
+            <p>Fra de første ideene til dagens verdensomspennende adopsjon:</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot milestone"></div>
+                    <div class="timeline-year">2008</div>
+                    <div class="timeline-content">
+                        <h4>Bitcoin Whitepaper</h4>
+                        <p>Satoshi Nakamoto publiserer whitepaperen "Bitcoin: A Peer-to-Peer Electronic Cash System" 31. oktober.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2009</div>
+                    <div class="timeline-content">
+                        <h4>Genesis-blokken</h4>
+                        <p>Den første Bitcoin mines 3. januar. Nettverket er live.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2010</div>
+                    <div class="timeline-content">
+                        <h4>Bitcoin Pizza Day</h4>
+                        <p>10 000 BTC for to pizzaer - det første virkelige kjøpet med cryptocurrency.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot milestone"></div>
+                    <div class="timeline-year">2015</div>
+                    <div class="timeline-content">
+                        <h4>Ethereum Lansering</h4>
+                        <p>Vitalik Buterin lanserer Ethereum, introduserer smart kontrakter og konseptet med en "verdensdatamaskin".</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2017</div>
+                    <div class="timeline-content">
+                        <h4>ICO-boom</h4>
+                        <p>Initial Coin Offerings reiser milliarder. Crypto får mainstream oppmerksomhet.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h4>DeFi-sommer</h4>
+                        <p>Desentralisert finans eksploderer. Yield farming, likviditetspooler og DEXer blir populære.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot milestone"></div>
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-content">
+                        <h4>NFT-eksplosjon og El Salvador</h4>
+                        <p>NFTer går viralt. El Salvador blir det første landet som vedtar Bitcoin som lovlig betalingsmiddel.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h4>Bitcoin ETF-er og Halving</h4>
+                        <p>Spot Bitcoin ETF-er godkjennes i USA. Den 4. halving reduserer belønningen for minere.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">2026</div>
+                    <div class="timeline-content">
+                        <h4>Institusjonell Adopsjon</h4>
+                        <p>Flere land og selskaper integrerer crypto. DeFi har blitt mainstream.</p>
+                    </div>
+                </div>
+            </div>
+        `,
+        quickstart: `
+            <h2>Hvordan Kommer Du I Gang med Crypto? - 4 Trinn</h2>
+            <p>Dine første skritt i verden av digitale assets, enkelt forklart:</p>
+
+            <div class="quick-steps">
+                <div class="quick-step">
+                    <div class="quick-step-number">1</div>
+                    <h4>Velg Lommebok</h4>
+                    <p>Last ned en sikker lommebok som MetaMask eller Trust Wallet. Oppbevar seed phrase-en din offline!</p>
+                </div>
+                <div class="quick-step">
+                    <div class="quick-step-number">2</div>
+                    <h4>Finn Exchange</h4>
+                    <p>Velg en pålitelig exchange som Coinbase eller Kraken. Fullfør KYC-verifiseringen.</p>
+                </div>
+                <div class="quick-step">
+                    <div class="quick-step-number">3</div>
+                    <h4>Første Kjøp</h4>
+                    <p>Kjøp en liten mengde Bitcoin eller Ethereum. Start aldri med mer enn du har råd til å tape.</p>
+                </div>
+                <div class="quick-step">
+                    <div class="quick-step-number">4</div>
+                    <h4>Sikker Oppbevaring</h4>
+                    <p>Flytt din crypto til din egen lommebok. Aktiver 2FA overalt. Lær om svindel!</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>Viktig Regel</h4>
+                <p>Start lite. Lær først. Invester aldri mer enn du har råd til å tape. Crypto er volatilt!</p>
+            </div>
+        `,
+        myths: `
+            <h2>Myter og Misforståelser</h2>
+            <p>Klikk på en myte for å avsløre sannheten:</p>
+
+            <div class="myth-card" onclick="this.classList.toggle('flipped')">
+                <div class="myth-question">
+                    <div class="myth-icon">&#10060;</div>
+                    <div>
+                        <h4 style="margin: 0;">"Crypto er bare for kriminelle"</h4>
+                        <p style="margin: 5px 0 0 0; color: var(--text-gray);">De fleste crypto-transaksjoner er ulovlige...</p>
+                    </div>
+                </div>
+                <div class="myth-answer">
+                    <div class="myth-icon">&#9989;</div>
+                    <div>
+                        <h4 style="margin: 0; color: #059669;">Sannheten</h4>
+                        <p style="margin: 5px 0 0 0;">Mindre enn 0,5% av crypto-transaksjoner er ulovlige. Bitcoin er fullstendig sporbar. Banker behandler mye mer kriminelle penger årlig.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="myth-card" onclick="this.classList.toggle('flipped')">
+                <div class="myth-question">
+                    <div class="myth-icon">&#10060;</div>
+                    <div>
+                        <h4 style="margin: 0;">"Det er for sent å komme inn"</h4>
+                        <p style="margin: 5px 0 0 0; color: var(--text-gray);">Bitcoin er allerede $100 000+, båten er gått...</p>
+                    </div>
+                </div>
+                <div class="myth-answer">
+                    <div class="myth-icon">&#9989;</div>
+                    <div>
+                        <h4 style="margin: 0; color: #059669;">Sannheten</h4>
+                        <p style="margin: 5px 0 0 0;">Crypto er fortsatt i den tidlige adopsjonsfasen. Sammenlign det med internett i 2000 - den virkelige veksten kommer ennå.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="myth-card" onclick="this.classList.toggle('flipped')">
+                <div class="myth-question">
+                    <div class="myth-icon">&#10060;</div>
+                    <div>
+                        <h4 style="margin: 0;">"Crypto har ingen reel verdi"</h4>
+                        <p style="margin: 5px 0 0 0; color: var(--text-gray);">Det er luft, du kan ikke ta på det...</p>
+                    </div>
+                </div>
+                <div class="myth-answer">
+                    <div class="myth-icon">&#9989;</div>
+                    <div>
+                        <h4 style="margin: 0; color: #059669;">Sannheten</h4>
+                        <p style="margin: 5px 0 0 0;">Verdi kommer fra knapphet, sikkerhet, nettverkseffekt og nytte. Det samme gjelder for gull, aksjer og fiat-penger - de er også 99% digitale.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="myth-card" onclick="this.classList.toggle('flipped')">
+                <div class="myth-question">
+                    <div class="myth-icon">&#10060;</div>
+                    <div>
+                        <h4 style="margin: 0;">"Du må kjøpe en hel Bitcoin"</h4>
+                        <p style="margin: 5px 0 0 0; color: var(--text-gray);">Bitcoin er for dyrt for meg...</p>
+                    </div>
+                </div>
+                <div class="myth-answer">
+                    <div class="myth-icon">&#9989;</div>
+                    <div>
+                        <h4 style="margin: 0; color: #059669;">Sannheten</h4>
+                        <p style="margin: 5px 0 0 0;">Bitcoin is divisible to 8 decimals. You can buy $10, $50, or $500 worth of Bitcoin. Du trenger ikke å eie en hel BTC.</p>
+                    </div>
+                </div>
+            </div>
+        `,
+        security_basics: `
+            <h2>Sikkerhet Grunnleggende</h2>
+            <p>De første reglene for crypto-sikkerhet - lær disse før du investerer:</p>
+
+            <div class="highlight">
+                <h3>1. Dine Nøkler, Din Crypto</h3>
+                <p><sterk>"Not your keys, not your coins."</sterk> Hvis du lar crypto ligge på en exchange, kontrollerer exchange den. Flytt den til din egen lommebok.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>2. Seed Phrase = Alt</h3>
+                <p>Din seed phrase (12-24 ord) er backup-en av lommeboken din. <sterk>Skriv det på papir</sterk>, ikke på telefonen eller datamaskinen din. Oppbevar det på et trygt sted.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>3. Gjenkjenne Svindel</h3>
+                <ul>
+                    <li>Ingen gir bort gratis crypto ("send 1 BTC, get 2 BTC back")</li>
+                    <li>Del aldri din seed phrase eller private nøkler</li>
+                    <li>Sjekk alltid URL-er dobbelt</li>
+                    <li>Vær skeptisk til "garantert" avkastning</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>4. 2FA er Essensielt</h3>
+                <p>Bruk <sterk>Google Authenticator</sterk> eller en hardware-nøkkel for alle kontoer. SMS 2FA er bedre enn ingenting, men ikke vanntett.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>U reverserbar</h4>
+                <p>Crypto-transaksjoner er <sterk>irreversible</sterk>. Hvis du sender penger til feil adresse eller blir hacket, finnes det ingen bank som kan hjelpe deg.</p>
+            </div>
+        `,
+        glossary: `
+            <h2>Crypto Ordliste</h2>
+            <p>Søk etter begreper eller bla gjennom alfabetet:</p>
+
+            <input type="text" class="glossary-search" placeholder="Søk etter et begrep..." onkeyup="filterGlossary(this.value)">
+
+            <div id="glossaryContainer">
+                <div class="glossary-letter">A</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Altcoin</div>
+                        <div class="glossary-def">Enhver cryptocurrency annen enn Bitcoin. Ethereum, Solana, Cardano er alle altcoins.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Airdrop</div>
+                        <div class="glossary-def">Gratis distribusjon av cryptocurrency-token til lommebokinnehavere, ofte som promotering.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">ATH (All Time High)</div>
+                        <div class="glossary-def">Den høyeste prisen en cryptocurrency noen gang har nådd.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">B</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Bear Market</div>
+                        <div class="glossary-def">En periode med fallende priser og negativt markedssentiment.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Blockchain</div>
+                        <div class="glossary-def">En desentralisert digital hovedbok som registrerer transaksjoner i blokker.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Bull Market</div>
+                        <div class="glossary-def">En periode med stigende priser og positivt markedssentiment.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">D</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">DeFi</div>
+                        <div class="glossary-def">Desentralisert Finans - finansielle tjenester uten banker, bygget på blockchain.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">DEX</div>
+                        <div class="glossary-def">Desentralisert Exchange - en exchange uten en sentral myndighet.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">F</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Fiat</div>
+                        <div class="glossary-def">Tradisjonelle penger utstedt av myndigheter, som euro eller dollar.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">FOMO</div>
+                        <div class="glossary-def">Fear Of Missing Out - frykt for å gå glipp av en mulighet, fører til impulsive beslutninger.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">H</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">HODL</div>
+                        <div class="glossary-def">En skrivefeil av "hold" som ble en meme. Betyr: hold langsiktig, ikke selg i panikk.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Hot Wallet</div>
+                        <div class="glossary-def">En lommebok koblet til internett. Praktisk men mindre sikker enn cold storage.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">K</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">KYC</div>
+                        <div class="glossary-def">Know Your Customer - identitetsverifisering påkrevd av exchange-er.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">M</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Mining</div>
+                        <div class="glossary-def">Prosessen med å verifisere transaksjoner og legge dem til blockchain, med belønning i crypto.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">N</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">NFT</div>
+                        <div class="glossary-def">Non-Fungible Token - et unikt digitalt element på blockchain, ofte kunst eller samleobjekter.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Node</div>
+                        <div class="glossary-def">En datamaskin som deltar i blockchain-nettverket og verifiserer transaksjoner.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">P</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Private Key</div>
+                        <div class="glossary-def">En hemmelig kode som gir tilgang til din crypto. DEL ALDRI denne med noen.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Public Key</div>
+                        <div class="glossary-def">Din "adresse" der andre kan sende crypto. Trygt å dele.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">S</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Seed Phrase</div>
+                        <div class="glossary-def">12-24 ord som kan gjenopprette lommeboken din. Oppbevar dette trygt og offline!</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Smart Contract</div>
+                        <div class="glossary-def">Et selvutførende program på blockchain som automatisk oppfyller avtaler.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Stablecoin</div>
+                        <div class="glossary-def">En cryptocurrency knyttet til en stabil verdi, vanligvis $1 (USDT, USDC).</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Staking</div>
+                        <div class="glossary-def">Låse opp crypto for å sikre nettverket og tjene belønninger.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">V</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Volatiliteit</div>
+                        <div class="glossary-def">Graden av prissvingninger. Crypto er kjent for høy volatilitet.</div>
+                    </div>
+                </div>
+
+                <div class="glossary-letter">W</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">Wallet</div>
+                        <div class="glossary-def">En digital lommebok for lagring, sending og mottak av cryptocurrency.</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">Whale</div>
+                        <div class="glossary-def">En person eller enhet som eier en enorm mengde crypto og kan påvirke markedet.</div>
+                    </div>
+                </div>
+            </div>
         `
     };
+
+    function filterGlossary(searchTerm) {
+        const items = document.querySelectorAll('.glossary-item');
+        const letters = document.querySelectorAll('.glossary-letter');
+
+        items.forEach(item => {
+            const term = item.querySelector('.glossary-term').textContent.toLowerCase();
+            const def = item.querySelector('.glossary-def').textContent.toLowerCase();
+            if (term.includes(searchTerm.toLowerCase()) || def.includes(searchTerm.toLowerCase())) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        letters.forEach(letter => {
+            const nextGrid = letter.nextElementSibling;
+            if (nextGrid && nextGrid.classList.contains('glossary-grid')) {
+                const visibleItems = nextGrid.querySelectorAll('.glossary-item[style*="block"]');
+                const hiddenItems = nextGrid.querySelectorAll('.glossary-item[style*="none"]');
+                if (visibleItems.length === 0 && hiddenItems.length > 0) {
+                    letter.style.display = 'none';
+                    nextGrid.style.display = 'none';
+                } else {
+                    letter.style.display = 'block';
+                    nextGrid.style.display = 'grid';
+                }
+            }
+        });
+    }
 
     function openEdu(key) { 
         document.getElementById('modalContainer').style.maxWidth = "850px"; 
@@ -233,39 +1254,56 @@
         document.getElementById('mainModal').style.display = 'flex'; 
     }
 
-    function openInvest(level) {
+    function openInvest(level, requiredAmount) {
+        const input = document.getElementById(level.toLowerCase() + 'Amount');
+        const val = parseFloat(input.value.replace(/[^0-9]/g, ''));
+
+        if (val !== requiredAmount) {
+            input.style.borderColor = '#EF4444';
+            return;
+        }
+
         document.getElementById('modalContainer').style.maxWidth = "600px";
-        const price = level === 'BASIC' ? '4950 EUR' : '9950 EUR';
+        const price = level === 'BASIC' ? '4,950 EUR' : '9,950 EUR';
         const url = level === 'BASIC' ? 'https://formspree.io/f/mbdvqdzo' : 'https://formspree.io/f/xnjkljgv';
         document.getElementById('modalBody').innerHTML = `
             <div style="text-align:center">
                 <img src="https://bitelity.net/Media/Image/logo.svg" alt="Bitelity" class="modal-logo">
                 <div class="academy-text" style="margin-bottom:20px;">Academy</div>
-                <p style="font-size:18px; margin:20px 0; font-weight: 500;">Om meer toegang en mogelijkheden te krijgen, is uw investering vereist.</p>
-                <button class="btn-invest" onclick="submitInvest('${url}')">UPGRADE MET ${price}</button>
+                <h2 style="margin: 10px 0;">` + (level === 'BASIC' ? 'SILVER ACCOUNT' : 'PRO ACCOUNT') + `</h2>
+                <p style="font-size:24px; font-weight:800; margin:15px 0; color:` + (level === 'BASIC' ? 'var(--basic-color)' : 'var(--pro-color)') + `;">&euro;` + price + `</p>
+                <p style="font-size:16px; margin:20px 0; font-weight: 500;">Bekreft din investering for å få tilgang til ` + (level === 'BASIC' ? 'BASIC' : 'PRO') + ` Programmet.</p>
+                <button class="btn-invest" onclick="submitInvest('` + url + `', '` + level + `')">BEKREFT INVESTERING PÅ &euro;` + price + `</button>
             </div>`;
         document.getElementById('mainModal').style.display = 'flex';
     }
 
-    function submitInvest(url) {
-        fetch(url, { method: 'POST', body: JSON.stringify({ request: "Upgrade Verzoek" }), headers: { 'Accept': 'application/json' } })
+    function submitInvest(url, level) {
+        fetch(url, { method: 'POST', body: JSON.stringify({ request: "Upgrade Verzoek", level: level }), headers: { 'Accept': 'application/json' } })
         .then(() => { 
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align:center">
                     <img src="https://bitelity.net/Media/Image/logo.svg" alt="Bitelity" class="modal-logo">
                     <div class="academy-text" style="margin-bottom:20px;">Academy</div>
-                    <h2 style="color:var(--basic-color)">Verzoek Ontvangen</h2>
-                    <p style="font-size:18px;">Uw financieel adviseur neemt spoedig contact met u op.</p>
+                    <h2 style="color:var(--basic-color)">Forespørsel Mottatt</h2>
+                    <p style="font-size:18px;">Din finansielle rådgiver vil kontakte deg snart.</p>
                 </div>`; 
+        })
+        .catch(() => {
+            document.getElementById('modalBody').innerHTML = `
+                <div style="text-align:center">
+                    <img src="https://bitelity.net/Media/Image/logo.svg" alt="Bitelity" class="modal-logo">
+                    <div class="academy-text" style="margin-bottom:20px;">Academy</div>
+                    <h2 style="color:var(--basic-color)">Forespørsel Mottatt</h2>
+                    <p style="font-size:18px;">Din finansielle rådgiver vil kontakte deg snart.</p>
+                </div>`;
         });
     }
 
-    function closeModal() { document.getElementById('mainModal').style.display = 'none'; }
-    function showTab(id) { 
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById(id).classList.add('active'); 
-        event.target.classList.add('active');
+    function closeModal(e) { 
+        if (!e || e.target.id === 'mainModal') {
+            document.getElementById('mainModal').style.display = 'none'; 
+        }
     }
 </script>
 </body>
